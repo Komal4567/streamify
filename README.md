@@ -2,7 +2,7 @@
 
 A full-stack web application where people from around the world can connect, practice languages together through real-time chat and video calls, and practice with an AI language partner.
 
-Live Demo: [Add your link after deployment]
+Live Demo: (https://streamify-psi-eight.vercel.app)
 
 ---
 
