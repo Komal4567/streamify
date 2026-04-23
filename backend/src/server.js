@@ -2,6 +2,8 @@ import express from "express";
 import "dotenv/config";
 import cookieParser from "cookie-parser";
 import cors from "cors";
+import aiRoutes from "./routes/ai.route.js";
+app.use("/api/ai", aiRoutes);
 
 import authRoutes from "./routes/auth.route.js";
 import userRoutes from "./routes/user.route.js";

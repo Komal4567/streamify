@@ -8,6 +8,7 @@ import NotificationsPage from "./pages/NotificationsPage.jsx";
 import CallPage from "./pages/CallPage.jsx";
 import ChatPage from "./pages/ChatPage.jsx";
 import OnboardingPage from "./pages/OnboardingPage.jsx";
+import AIChat from "./pages/AIChat";
 
 import { Toaster } from "react-hot-toast";
 
@@ -115,6 +116,15 @@ const App = () => {
           }
         />
       </Routes>
+      <Route path="/ai-chat" element={
+  isAuthenticated && isOnboarded ? (
+    <Layout showSidebar={true}>
+      <AIChat />
+    </Layout>
+  ) : (
+    <Navigate to={!isAuthenticated ? "/login" : "/onboarding"} />
+  )
+} />
 
       <Toaster />
     </div>
