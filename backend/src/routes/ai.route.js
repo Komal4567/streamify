@@ -4,7 +4,7 @@ import { getAIResponse } from "../controllers/ai.controller.js";
  
 const router = express.Router();
  
-router.post("/chat", protectRoute, getAIResponse);
+router.post("/chat", getAIResponse);
  
 export default router;
  
