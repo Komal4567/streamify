@@ -1,6 +1,6 @@
-import { GoogleGenerativeAI } from "@google/generative-ai";
+import Groq from "groq-sdk";
 
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
+const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
 
 export async function getAIResponse(req, res) {
   try {
@@ -10,12 +10,7 @@ export async function getAIResponse(req, res) {
       return res.status(400).json({ message: "Message is required" });
     }
 
-    // ✅ Use model supported by your current SDK
-    const model = genAI.getGenerativeModel({
-      model: "gemini-pro"
-    });
-
-    const prompt = `You are a friendly and patient language exchange partner and tutor.
+    const prompt = `/no_think You are a friendly and patient language exchange partner and tutor.
 The user's native language is ${nativeLanguage || "English"} and they are learning ${targetLanguage || "English"}.
 
 Your job is to:
@@ -30,23 +25,20 @@ Always be warm, friendly and encouraging like a real language exchange partner!
 
 User message: ${message}`;
 
-    // ✅ Correct format for Gemini request
-    const result = await model.generateContent({
-      contents: [
-        {
-          role: "user",
-          parts: [{ text: prompt }]
-        }
-      ]
+    const response = await groq.chat.completions.create({
+      model: "groq/compound-mini",
+      messages: [{ role: "user", content: prompt }],
+      temperature: 0.7,
+      max_tokens: 500,
     });
 
-    const aiMessage = result.response.text();
+    const rawMessage = response.choices[0].message.content;
+const aiMessage = rawMessage.replace(/<think>[\s\S]*?<\/think>/g, '').trim();
 
-    // ✅ Use "reply" (frontend-friendly)
     res.status(200).json({ reply: aiMessage });
 
   } catch (error) {
-    console.error("🔥 Gemini FULL ERROR:", error);
+    console.error("Groq ERROR:", error);
     res.status(500).json({
       message: "Failed to get AI response",
       error: error.message

@@ -37,7 +37,7 @@ const AIChat = () => {
 
       setMessages((prev) => [
         ...prev,
-        { role: "ai", content: response.data.message },
+        { role: "ai", content: response.data.reply },
       ]);
     } catch (error) {
       console.error("Error:", error);
