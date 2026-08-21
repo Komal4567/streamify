@@ -16,7 +16,8 @@ const PORT = process.env.PORT || 5001;
 app.use(cors({
   origin: [
     "http://localhost:5173",
-    "https://streamify-psi-eight.vercel.app"
+    "https://streamify-psi-eight.vercel.app",
+    "https://streamify-of28qzc19-komal4567s-projects.vercel.app"
   ],
   credentials: true,
 }));
